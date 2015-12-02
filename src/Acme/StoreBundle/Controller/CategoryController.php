@@ -9,6 +9,11 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\StoreBundle\Entity\Category;
 use Acme\StoreBundle\Form\CategoryType;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * Category controller.
@@ -20,20 +25,27 @@ class CategoryController extends Controller
 
     /**
      * Lists all Category entities.
-     *
-     * @Route("/", name="category")
+     * @Route("/")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entities = $em->getRepository('AcmeStoreBundle:Category')->findAll();
+        $categories = $em->getRepository('AcmeStoreBundle:Category')->findAll();
 
-        return array(
-            'entities' => $entities,
-        );
+        $encoders    = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer  = new Serializer($normalizers, $encoders);
+        $ret         = [];
+
+        foreach ($categories as $category) {
+            $ret[] = $category->toArray();
+        }
+
+        $jsonContent = $serializer->serialize($ret,'json');
+        return new Response($jsonContent);
+        // return new Response('$jsonContent');
     }
     /**
      * Creates a new Category entity.

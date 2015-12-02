@@ -40,6 +40,12 @@ class Category
         $this->products = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function toArray()
+    {
+        return array('id'   => $this->getId(), 
+                     'name' => $this->getName());
+    }
+
     /**
      * Get id
      *
