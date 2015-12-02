@@ -33,6 +33,17 @@ class Product
     protected $description;
 
     /**
+     * @ORM\Column(name="category_id",type="integer")
+     */
+    protected $categoryId;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Category")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    protected $category;
+
+    /**
      * Get id
      *
      * @return integer
@@ -115,10 +126,28 @@ class Product
     }
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     * Set categoryId
+     *
+     * @param integer $categoryId
+     *
+     * @return Product
      */
-    protected $category;
+    public function setCategoryId($categoryId)
+    {
+        $this->categoryId = $categoryId;
+
+        return $this;
+    }
+
+    /**
+     * Get categoryId
+     *
+     * @return integer
+     */
+    public function getCategoryId()
+    {
+        return $this->categoryId;
+    }
 
     /**
      * Set category

@@ -7,8 +7,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Component\HttpFoundation\Response;
 use Acme\StoreBundle\Entity\Product;
 use Acme\StoreBundle\Form\ProductType;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 /**
  * Product controller.
@@ -38,28 +40,29 @@ class ProductController extends Controller
     /**
      * Creates a new Product entity.
      *
-     * @Route("/", name="product_create")
+     * @Route("/create", name="product_create")
      * @Method("POST")
-     * @Template("AcmeStoreBundle:Product:new.html.twig")
+     * @ Template("AcmeStoreBundle:Product:new.html.twig")
      */
     public function createAction(Request $request)
     {
-        $entity = new Product();
-        $form = $this->createCreateForm($entity);
-        $form->handleRequest($request);
+        $params = $request->request->all();
 
-        if ($form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($entity);
-            $em->flush();
+        $product = new Product();
+        $product->setName($params['name']);
+        $product->setPrice($params['price']);
+        $product->setDescription($params['description']);
+        $categoryRep = $this->getDoctrine()->getRepository('AcmeStoreBundle:Category');
+        $category    = $categoryRep->findOneById($params['category']);
+        $product->setCategory($category);
 
-            return $this->redirect($this->generateUrl('product_show', array('id' => $entity->getId())));
-        }
-
-        return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
-        );
+        $em = $this->getDoctrine()->getEntityManager();
+        $em->persist($product);
+        $em->flush();
+        return new RedirectResponse($this->generateUrl('product'));
+        // $this->redirectToRoute('product', array(), 301);
+        // return $this->redirect('/product');
+        // return new Response('Hello world!');
     }
 
     /**
@@ -90,12 +93,15 @@ class ProductController extends Controller
      */
     public function newAction()
     {
-        $entity = new Product();
-        $form   = $this->createCreateForm($entity);
+        $product     = new Product();
+        $categoryRep = $this->getDoctrine()->getRepository('AcmeStoreBundle:Category');
+        $form        = $this->createCreateForm($product,$categoryRep);
+        $categories  = $categoryRep->findBy(array());
 
         return array(
-            'entity' => $entity,
-            'form'   => $form->createView(),
+            'product'    => $product,
+            'form'       => $form->createView(),
+            'categories' => $categories
         );
     }
 
@@ -165,7 +171,7 @@ class ProductController extends Controller
             'method' => 'PUT',
         ));
 
-        $form->add('submit', 'submit', array('label' => 'Update'));
+        $form->add('submit', array('label' => 'Update'));
 
         return $form;
     }

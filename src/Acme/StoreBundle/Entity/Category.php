@@ -28,6 +28,17 @@ class Category
      */
     private $name;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Product",mappedBy="category")
+     */
+    protected $products;
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->products = new \Doctrine\Common\Collections\ArrayCollection();
+    }
 
     /**
      * Get id
@@ -61,17 +72,6 @@ class Category
     public function getName()
     {
         return $this->name;
-    }
-
- 
-    /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
-     */
-    protected $products;
-
-    public function __construct()
-    {
-        $this->products = new ArrayCollection();
     }
 
     /**

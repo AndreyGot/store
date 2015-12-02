@@ -2,8 +2,26 @@
 
 {% block body -%}
     <h1>Product creation</h1>
+    {# {{ form(form) }} #}
 
-    {{ form(form) }}
+    <form action="create" method="post" id="productForm">
+    	product name:
+	    <input type="text" name="name" value="{{product.name}}"/><br>
+	    price:
+	    <input type="text" name="price" value="{{product.price}}"/><br>
+	    description:
+	    <input type="text" name="description" value="{{product.description}}"/><br>
+	    category:
+	    <select name="category" >
+	      {% for category in categories %}
+	          <option value="{{ category.getId() }}">
+	          	{{ category.getName() }}
+	          </option>
+	      {% endfor %}
+	    </select>
+    </form>
+		<button type="submit" form="productForm" value="Submit">Добавить</button>
+
 
         <ul class="record_actions">
     <li>
