@@ -3,8 +3,24 @@
   <head>
     <title>Page Title</title>
   </head>
-  <script type="text/javascript" src="/components/angular/angular.min.js"></script>
-  <script type="text/javascript" src="/components/angular-ui-router/release/angular-ui-router.js"></script>
+
+  <link rel="stylesheet" href="{{ asset('components/bootstrap/dist/css/bootstrap.css') }}">
+  <script 
+    type="text/javascript" 
+    src="/components/angular/angular.min.js">
+  </script>
+  <script 
+    type="text/javascript" 
+    src="/components/angular-ui-router/release/angular-ui-router.js">
+  </script>
+  <script \
+    type="text/javascript"
+    src="/components/jquery/dist/jquery.min.js">
+  </script>
+  <script \
+    type="text/javascript"
+    src="/components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js">
+  </script>
   {% javascripts '@AcmeStoreBundle/Resources/public/js/*' %}
       <script src="{{ asset_url }}"></script>
   {% endjavascripts %}
@@ -17,7 +33,17 @@
       <p>This is a paragraph.</p>
       <div ng-controller="productFormCtrl">
         <div ng-repeat="category in categories">
-          [[category.id]] - [[category.name]]
+          <div class="row">
+            <div class="col-xs-2">
+              [[category.id]]              
+            </div>
+            <div class="col-xs-1">
+              -              
+            </div>
+            <div class="col-xs-9">
+              [[category.name]]              
+            </div>
+          </div>
         </div>
       </div>
     </div>

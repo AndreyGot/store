@@ -11,14 +11,15 @@
     "package.json"
   ],
   "dependencies": {
+    "jquery":"latest",
     "modernizr": "~2.8.1",
     "jquery": "~2.1.4",
-    "bootstrap": "~3.2.0",
     "angular": "~1.x",
     "angular-route": "~1.2.16",
     "angular-animate": "~1.2.16",
-    "angular-bootstrap": "~0.12.1",
     "angular-ui-router": "~0.2.15",
-    "restangular": "~1.4.0"
+    "restangular": "~1.4.0",
+    "angular-ui-bootstrap-bower": "latest",
+    "angular-bootstrap": "latest"
   }
 }
