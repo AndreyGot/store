@@ -11,3 +11,7 @@
 /vendor/
 /bin/
 /composer.phar
+
+composer.lock
+diff.diff
+

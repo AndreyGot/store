@@ -8,17 +8,19 @@
   {% javascripts '@AcmeStoreBundle/Resources/public/js/*' %}
       <script src="{{ asset_url }}"></script>
   {% endjavascripts %}
-
+  
   <body>
     <div ng-app="andrey">
-      <input ng-model="test">  
-      [[test]]
+      <input ng-model="test"> 
+      <p>This is the test: [[test]]</p> 
       <h1>This is a Heading</h1>
       <p>This is a paragraph.</p>
-
       <div ng-controller="productFormCtrl">
-        
+        <div ng-repeat="category in categories">
+          [[category.id]] - [[category.name]]
+        </div>
       </div>
     </div>
+    <h1>JavaScript</h1>
   </body>
 </html> 

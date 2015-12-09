@@ -3,7 +3,7 @@
 {% block body -%}
     <h1>Product list</h1>
 
-    <table class="records_list">
+    <table class="table-condensed" border="1">
         <thead>
             <tr>
                 <th>Id</th>
@@ -44,9 +44,9 @@
             </a>
         </li>
         <li>
-            <a href="{{ path('category') }}">
+            <a href="{# {{ path('category') }} #}">
                 Show category list
             </a>
-        </li>        
+        </li>
     </ul>
     {% endblock %}
