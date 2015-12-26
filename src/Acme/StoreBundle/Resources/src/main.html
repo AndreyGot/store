@@ -6,23 +6,15 @@
   </div>
 </div>
 
-<div>Шаблон по умолчанию</div>
+<div ng-show="!type">
+  Шаблон по умолчанию
+</div>
 
 <div ng-show="type==='product'">
-	<table class="table-condensed" >
-	  <tr ng-repeat="product in products" style="border: 1px solid green;">
-	    <td>[[product.id]]</td>
-	    <td>[[product.name]]</td>
-	  </tr>
-	</table>
+  <div ng-include="'/product/index.html'"></div>
 </div>
 
 <div ng-show="type==='category'">
-	<table class="table-condensed" >
-	  <tr ng-repeat="category in categories" style="border: 1px solid blue;">
-	    <td>[[category.id]]</td>
-	    <td>[[category.name]]</td>
-	  </tr>
-	</table>
+  <div ng-include="'/category/index.html'"></div>
 </div>
 <div ng-show="type==='contact'">Contacts</div>

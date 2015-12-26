@@ -18,8 +18,9 @@
     "angular-route": "~1.2.16",
     "angular-animate": "~1.2.16",
     "angular-ui-router": "~0.2.15",
-    "restangular": "~1.4.0",
+    "restangular": "latest",
     "angular-ui-bootstrap-bower": "latest",
-    "angular-bootstrap": "latest"
+    "angular-bootstrap": "latest",
+    "underscore": "latest"
   }
 }

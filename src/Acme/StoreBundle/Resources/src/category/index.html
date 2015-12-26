@@ -1,6 +1,21 @@
 <table class="table-condensed" >
-  <tr ng-repeat="category in categories" style="border: 1px solid blue;">
+  <tr ng-repeat="category in categories" style="border: 1px solid blue;" ng-click="editCategory(category)">
     <td>[[category.id]]</td>
-    <td>[[category.name]]</td>
+    	<td>
+		  	<div ng-show="!category.edit">
+    			[[category.name]]
+				</div>
+				<div ng-show="category.edit">
+					<input
+						name="categoryName"
+						ng-model="category.name"
+					></input>
+					<button ng-click="saveCategory(category)">
+						Save
+					</button>
+		  	</div>
+    	</td>
+  	</div>
+
   </tr>
 </table>

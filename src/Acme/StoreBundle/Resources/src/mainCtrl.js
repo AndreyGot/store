@@ -1,31 +1,31 @@
-mainCtrl = function ($scope,$http)
+mainCtrl = function ($scope,Restangular)
 {
-	$scope.type = 'product';
+	$scope.type = '';
 	$scope.typeChange = function (type) {
 		$scope.type = type;
 	};
 
 	$scope.categories = [];
 	function uploadCategorise () {
-		$http.get('/app_dev.php/category').then(function (response) 
-		{
-			$scope.categories = response.data;
+		var service = Restangular.service('category');
+		service.getList().then(function (response) {
+			$scope.categories = response;
 		});
 	}
 
 	$scope.products = [];
 	function uploadProducts () {
-		$http.get('/app_dev.php/product').then(function (response)
-		{
-			$scope.products = response.data;
+		var service = Restangular.service('product');
+		service.getList().then(function (response) {
+			$scope.products = response;
 		});
 	}
 
 	$scope.contacts = [];
 	function uploadContacts () {
-		$http.get('/app_dev.php/contact').then(function (response)
-		{
-			$scope.contacts = response.data;
+		var service = Restangular.service('contact');
+		service.getList().then(function (response) {
+			$scope.contacts = response;
 		});
 	}
 
@@ -37,9 +37,19 @@ mainCtrl = function ($scope,$http)
 			uploadProducts();
 		} else if ($scope.type === 'contact') {
 			uploadContacts();
-		} else {
-			console.warn('error');
 		}
 	});
+
+	$scope.editCategory = function (category) {
+		category.edit = true;
+	};
+
+	$scope.saveCategory = function (category) {
+		Restangular.restangularizeElement(null, category, 'category');
+		category.fromServer = true;
+		category.save().then(function (data) {
+			console.log(data);
+		});
+	};
 };
 angular.module('andrey').controller('mainCtrl',mainCtrl);

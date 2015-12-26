@@ -18,12 +18,6 @@ var gulp         = require('gulp'),
 
     clean        = require('gulp-clean'),
     notify       = require('gulp-notify'),
-
-    // sprites
-    sprite       = require('css-sprite').stream,
-    gulpif       = require('gulp-if'),
-    merge        = require('gulp-merge'),
-
     // angular
     ngAnnotate   = require('gulp-ng-annotate');
 
@@ -73,6 +67,8 @@ gulp.task('libs', function () {
       'web/components/angular-ui-router/release/angular-ui-router.js',
       'web/components/jquery/dist/jquery.min.js',
       'web/components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js',
+      'web/components/underscore/underscore.js',
+      'web/components/restangular/dist/restangular.js',
     ])
     .pipe(concat('libs.js'))
     .pipe(gulp.dest('web/libs'))

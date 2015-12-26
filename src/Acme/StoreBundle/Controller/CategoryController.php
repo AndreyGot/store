@@ -37,15 +37,22 @@ class CategoryController extends Controller
         $encoders    = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
         $serializer  = new Serializer($normalizers, $encoders);
-        $ret         = [];
 
+        $ret         = [];
         foreach ($categories as $category) {
             $ret[] = $category->toArray();
         }
 
-        $jsonContent = $serializer->serialize($ret,'json');
+        $jsonContent = $this->getJson($ret);
         return new Response($jsonContent);
-        // return new Response('$jsonContent');
+    }
+
+    private function getJson($data) {
+        $encoders    = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer  = new Serializer($normalizers, $encoders);
+        $jsonContent = $serializer->serialize($data,'json');
+        return $jsonContent;
     }
     /**
      * Creates a new Category entity.
@@ -139,30 +146,37 @@ class CategoryController extends Controller
     /**
      * Displays a form to edit an existing Category entity.
      *
-     * @Route("/{id}/edit", name="category_edit")
-     * @Method("GET")
-     * @Template()
+     * @Route("/{id}", defaults={"_format": "json"}, name="category_edit")
+     * @Method("PUT")
      */
-    public function editAction($id)
+    public function editAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $entity = $em->getRepository('AcmeStoreBundle:Category')->find($id);
+        $entity = $em->getRepository('AcmeStoreBundle:Category')->findOneById($id);
 
         if (!$entity) {
             throw $this->createNotFoundException('Unable to find Category entity.');
         }
 
-        $editForm = $this->createEditForm($entity);
+        $editForm   = $this->createEditForm($entity);
         $deleteForm = $this->createDeleteForm($id);
+        $data       = $request->request->all();
+        
+        $data       = array('id' => $id, 'name' => 'test');
 
-        return array(
-            'entity'      => $entity,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        );
+        $editForm->submit($data);
+        if ($editForm->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            return new Response($entity->toArray());
+        } else {
+            $errors = $editForm->getErrors();
+            return new Response($this->getJson($errors));
+        }
     }
 
+    
     /**
     * Creates a form to edit a Category entity.
     *

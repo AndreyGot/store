@@ -1,6 +1,11 @@
-angular.module('andrey',['ui.router','ui.bootstrap'])
+angular.module('andrey',['ui.router','ui.bootstrap','restangular'])
   .config(['$interpolateProvider', function ($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');
-  }]).run(function () {});
+  }])
+  .config(function (RestangularProvider) {
+  	var pathname = document.location.pathname.replace(/\/$/,'');
+  	RestangularProvider.setBaseUrl(pathname);
+  })
+  .run(function () {});
   
