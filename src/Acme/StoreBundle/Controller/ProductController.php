@@ -7,10 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
-use Symfony\Component\HttpFoundation\Response;
 use Acme\StoreBundle\Entity\Product;
 use Acme\StoreBundle\Form\ProductType;
-use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Serializer\Serializer;
+use Symfony\Component\Serializer\Encoder\XmlEncoder;
+use Symfony\Component\Serializer\Encoder\JsonEncoder;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 /**
  * Product controller.
@@ -25,17 +28,21 @@ class ProductController extends Controller
      *
      * @Route("/", name="product")
      * @Method("GET")
-     * @Template()
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
+        $em          = $this->getDoctrine()->getManager();
+        $products    = $em->getRepository('AcmeStoreBundle:Product')->findAll();
+        $encoders    = array(new XmlEncoder(), new JsonEncoder());
+        $normalizers = array(new ObjectNormalizer());
+        $serializer  = new Serializer($normalizers, $encoders);
+        $ret         = [];
 
-        $entities = $em->getRepository('AcmeStoreBundle:Product')->findAll();
-
-        return array(
-            'entities' => $entities,
-        );
+        foreach ($products as $product) {
+            $ret[] = $product->toArray();
+        }
+        $jsonContent = $serializer->serialize($ret,'json');
+        return new Response($jsonContent);
     }
     /**
      * Creates a new Product entity.

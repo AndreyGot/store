@@ -1,5 +1,8 @@
 /web/bundles/
 /web/components/
+/web/html/
+/web/js/
+/web/libs/
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
@@ -8,6 +11,7 @@
 !app/logs/.gitkeep
 /app/phpunit.xml
 /build/
+/node_modules/
 /vendor/
 /bin/
 /composer.phar

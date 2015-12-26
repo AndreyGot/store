@@ -25,7 +25,7 @@ class CategoryController extends Controller
 
     /**
      * Lists all Category entities.
-     * @Route("/")
+     * @Route("")
      * @Method("GET")
      */
     public function indexAction()

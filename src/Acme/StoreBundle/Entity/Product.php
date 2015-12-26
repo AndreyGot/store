@@ -43,6 +43,15 @@ class Product
      */
     protected $category;
 
+    public function toArray()
+    {
+        return array('id'   => $this->getId(), 
+                     'name' => $this->getName(),
+                     'price'=> $this->getPrice(),
+                     'description'=> $this->getDescription(),
+                     'categoryId'=> $this->getCategoryId());
+
+    }
     /**
      * Get id
      *

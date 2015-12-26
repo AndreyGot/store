@@ -1,52 +1,30 @@
  <!DOCTYPE html>
 <html>
   <head>
-    <title>Page Title</title>
+    <title>category</title>
   </head>
 
   <link rel="stylesheet" href="{{ asset('components/bootstrap/dist/css/bootstrap.css') }}">
-  <script 
-    type="text/javascript" 
-    src="/components/angular/angular.min.js">
-  </script>
-  <script 
-    type="text/javascript" 
-    src="/components/angular-ui-router/release/angular-ui-router.js">
-  </script>
-  <script \
-    type="text/javascript"
-    src="/components/jquery/dist/jquery.min.js">
-  </script>
-  <script \
-    type="text/javascript"
-    src="/components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js">
-  </script>
-  {% javascripts '@AcmeStoreBundle/Resources/public/js/*' %}
-      <script src="{{ asset_url }}"></script>
-  {% endjavascripts %}
-  
-  <body>
-    <div ng-app="andrey">
-      <input ng-model="test"> 
-      <p>This is the test: [[test]]</p> 
-      <h1>This is a Heading</h1>
-      <p>This is a paragraph.</p>
-      <div ng-controller="productFormCtrl">
-        <div ng-repeat="category in categories">
-          <div class="row">
-            <div class="col-xs-2">
-              [[category.id]]              
-            </div>
-            <div class="col-xs-1">
-              -              
-            </div>
-            <div class="col-xs-9">
-              [[category.name]]              
-            </div>
-          </div>
+  <body ng-app="preloader">
+    <div ui-view></div>
+    {# <div ng-controller="mainCtrl"> #}
+{#       <div style="border: 1px solid blue; text-align: center;">
+        <div class="nav nav-pills">
+          <button class="btn" ui-sref="product">Product</button>
+          <button class="btn" ui-sref="category">Categories</button>
+          <button class="btn">Contakts</button>
+          <button class="btn" ng-click="typeChange('product')">Product</button>
+          <button class="btn" ng-click="typeChange('category')">Categories</button>
+          <button class="btn" ng-click="typeChange('contact')">Contacts</button>
         </div>
       </div>
-    </div>
-    <h1>JavaScript</h1>
+      <div ng-show="type==='product'">Product</div>
+      <div ng-show="type==='category'">Categories</div>
+      <div ng-show="type==='contact'">Contacts</div> #}
+
+
+    {# </div> #}
+    <script src="{{ asset('libs/libs.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
   </body>
 </html> 
