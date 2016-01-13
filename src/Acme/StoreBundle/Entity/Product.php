@@ -5,8 +5,8 @@ namespace Acme\StoreBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity
  * @ORM\Table(name="product")
+ * @ORM\Entity(repositoryClass="Acme\StoreBundle\Repository\ProductRepository")
  */
 class Product
 {
@@ -49,7 +49,8 @@ class Product
                      'name' => $this->getName(),
                      'price'=> $this->getPrice(),
                      'description'=> $this->getDescription(),
-                     'categoryId'=> $this->getCategoryId());
+                     'categoryName'=>$this->getCategory()->getName(),
+                     );
 
     }
     /**

@@ -10,50 +10,36 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
 use Acme\StoreBundle\Entity\Category;
 use Acme\StoreBundle\Form\CategoryType;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\XmlEncoder;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+
+use Acme\StoreBundle\Base\MainApiController;
 
 /**
  * Category controller.
  *
  * @Route("/category")
  */
-class CategoryController extends Controller
+class CategoryController extends MainApiController
 {
+    /**
+     * Displays a form to edit an existing Category entity.
+     * @Route("/{id}", defaults={"_format"="json"}, requirements={"_method"="PUT", "id"="[\d-]+"})
+     * @Method("PUT")
+     */
+    public function editAction(Request $request, $id)
+    {
+        return parent::editAction($request, $id);
+    }
 
     /**
      * Lists all Category entities.
-     * @Route("")
+     * @Route("", name="category")
      * @Method("GET")
      */
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $categories = $em->getRepository('AcmeStoreBundle:Category')->findAll();
-
-        $encoders    = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer  = new Serializer($normalizers, $encoders);
-
-        $ret         = [];
-        foreach ($categories as $category) {
-            $ret[] = $category->toArray();
-        }
-
-        $jsonContent = $this->getJson($ret);
-        return new Response($jsonContent);
+        return parent::indexAction();
     }
 
-    private function getJson($data) {
-        $encoders    = array(new XmlEncoder(), new JsonEncoder());
-        $normalizers = array(new ObjectNormalizer());
-        $serializer  = new Serializer($normalizers, $encoders);
-        $jsonContent = $serializer->serialize($data,'json');
-        return $jsonContent;
-    }
     /**
      * Creates a new Category entity.
      *
@@ -141,39 +127,6 @@ class CategoryController extends Controller
             'entity'      => $entity,
             'delete_form' => $deleteForm->createView(),
         );
-    }
-
-    /**
-     * Displays a form to edit an existing Category entity.
-     *
-     * @Route("/{id}", defaults={"_format": "json"}, name="category_edit")
-     * @Method("PUT")
-     */
-    public function editAction(Request $request, $id)
-    {
-        $em = $this->getDoctrine()->getManager();
-
-        $entity = $em->getRepository('AcmeStoreBundle:Category')->findOneById($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
-        }
-
-        $editForm   = $this->createEditForm($entity);
-        $deleteForm = $this->createDeleteForm($id);
-        $data       = $request->request->all();
-        
-        $data       = array('id' => $id, 'name' => 'test');
-
-        $editForm->submit($data);
-        if ($editForm->isValid()) {
-            $em->persist($entity);
-            $em->flush();
-            return new Response($entity->toArray());
-        } else {
-            $errors = $editForm->getErrors();
-            return new Response($this->getJson($errors));
-        }
     }
 
     

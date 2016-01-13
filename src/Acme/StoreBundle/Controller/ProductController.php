@@ -26,7 +26,7 @@ class ProductController extends Controller
     /**
      * Lists all Product entities.
      *
-     * @Route("/", name="product")
+     * @Route("", name="product")
      * @Method("GET")
      */
     public function indexAction()

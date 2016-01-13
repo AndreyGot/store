@@ -47,8 +47,9 @@ mainCtrl = function ($scope,Restangular)
 	$scope.saveCategory = function (category) {
 		Restangular.restangularizeElement(null, category, 'category');
 		category.fromServer = true;
-		category.save().then(function (data) {
-			console.log(data);
+		
+		category.save().then(function (/*data*/) {
+			category.edit = false;
 		});
 	};
 };

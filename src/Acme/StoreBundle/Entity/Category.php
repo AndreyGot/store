@@ -7,8 +7,8 @@ use Doctrine\Common\Collections\ArrayCollection;
 /**
  * Category
  *
- * @ORM\Table()
- * @ORM\Entity(repositoryClass="Acme\StoreBundle\Entity\CategoryRepository")
+ * @ORM\Table(name="category")
+ * @ORM\Entity(repositoryClass="Acme\StoreBundle\Repository\CategoryRepository")
  */
 class Category
 {
@@ -29,7 +29,7 @@ class Category
     private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product",mappedBy="category")
+     * @ORM\OneToMany(targetEntity="Product", mappedBy="category")
      */
     protected $products;
     /**

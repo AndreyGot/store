@@ -25,7 +25,8 @@ class CategoryType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\StoreBundle\Entity\Category'
+            'data_class' => 'Acme\StoreBundle\Entity\Category',
+            'csrf_protection' => false,
         ));
     }
 
