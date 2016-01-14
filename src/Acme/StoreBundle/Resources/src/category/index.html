@@ -1,19 +1,17 @@
 <table class="table-condensed" >
-  <tr ng-repeat="category in categories" style="border: 1px solid blue;" ng-click="editCategory(category)">
+  <tr ng-repeat="category in categories" style="border: 1px solid green;" ng-click="editCategory(category)">
     <td>[[category.id]]</td>
   	<td>
 	  	<div ng-show="!category.edit">
   			[[category.name]]
-			</div>
-			<div ng-show="category.edit">
-				<input name="categoryName" ng-model="category.name">
-				<button ng-click="saveCategory(category)">
-					Save
-				</button>
-	  	</div>
-  	</td>
-  	<td>
-  		<img ng-src="/image/edit.png" alt="Description" />
-  	</td>
+    		<img ng-src="/image/edit_25x25.png" alt="Description" />
+      </div>
+      <div ng-show="category.edit">
+        <input name="categoryName" ng-model="category.name">
+        <button ng-click="saveCategory(category)">
+          Save
+        </button>
+      </div>
+    </td>
   </tr>
 </table>
