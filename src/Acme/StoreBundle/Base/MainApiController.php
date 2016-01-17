@@ -13,6 +13,22 @@ use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
 class MainApiController extends Controller
 {
+    public function getCurrentEntityName()
+    {
+        $arrayMaches = [];
+        $className   = get_class($this);
+        preg_match('/^Acme\\\StoreBundle\\\Controller\\\(.*)Controller/', $className, $arrayMaches);
+        return end($arrayMaches);
+    }
+    public function getCurrentForm($entityName)
+    {
+        return "Acme\StoreBundle\Form\\{$entityName}Type";
+    }
+
+    public function getCurrentEntityPath($entityName)
+    {
+        return "Acme\StoreBundle\Entity\\{$entityName}";
+    }
 
     public function generateResponse($jsonContent)
     {
@@ -23,17 +39,21 @@ class MainApiController extends Controller
 
     public function indexAction()
     {
+        $arrThisClass = explode("/", get_class($this));
+        $lastElement  = end($arrThisClass);
+        $currentEntityName = $this->getCurrentEntityName();
+        if (!$currentEntityName) {
+            return new Response($this->getJson('Controller name is not valid.'));
+        }
 
-        // var_dump(get_class($this));
-        
         $em         = $this->getDoctrine()->getManager();
-        $categories = $em->getRepository('AcmeStoreBundle:Category')->findAll();
+        $entities    = $em->getRepository("AcmeStoreBundle:{$currentEntityName}")->findAll();
         $encoders   = array(new XmlEncoder(), new JsonEncoder());
         $normalizers= array(new ObjectNormalizer());
         $serializer = new Serializer($normalizers, $encoders);
         $ret = [];
         
-        foreach ($categories as $category) {
+        foreach ($entities as $category) {
             $ret[]   = $category -> toArray();
         }
 
@@ -43,21 +63,25 @@ class MainApiController extends Controller
 
     public function editAction(Request $request, $id)
     {
-        $data = array();
-        $content = $this->get("request")->getContent();
+        $data    = array();
+        $content = $request->getContent();
         if (!empty($content))
         {
             $data = json_decode($content, true); // 2nd param to get as array
         }
         $em = $this->getDoctrine()->getManager();
-        $entity = $em->getRepository('AcmeStoreBundle:Category')->findOneById($id);
-
-        if (!$entity) {
-            throw $this->createNotFoundException('Unable to find Category entity.');
+        $currentEntityName = $this->getCurrentEntityName();
+        if (!$currentEntityName) {
+            return new Response($this->getJson('Controller name is not valid.'));
         }
-        $entityForm = "Acme\StoreBundle\Form\CategoryType";
+        $entity = $em->getRepository("AcmeStoreBundle:{$currentEntityName}")->findOneById($id);
+        if (!$entity) {
+            return new Response($this->getJson('Unable to find Category entity.'));
+        }
+        
+        $entityForm = $this->getCurrentForm($currentEntityName);
 
-        $form           = $this->createForm(new $entityForm, $entity)->add('submit','submit'); 
+        $form           = $this->createForm(new $entityForm, $entity); 
         $relationFields = $form->all();
         $data           = array_intersect_key($data, $relationFields);
 
@@ -72,6 +96,51 @@ class MainApiController extends Controller
         }
     }
 
+    public function createAction(Request $request)
+    {
+        $content = $request->getContent();
+        if (!empty($content))
+        {
+            $data = json_decode($content, true); // 2nd param to get as array
+        }
+        $em                = $this->getDoctrine()->getManager();
+        $currentEntityName = $this->getCurrentEntityName();
+
+        $entityClassName = $this->getCurrentEntityPath($currentEntityName);
+        $entity          = new $entityClassName;
+        $entityForm      = $this->getCurrentForm($currentEntityName);
+        $form            = $this->createForm(new $entityForm, $entity); 
+        $relationFields  = $form->all();
+        $data            = array_intersect_key($data, $relationFields);
+
+        $form->submit($data);
+        if ($form->isValid()) {
+            $em->persist($entity);
+            $em->flush();
+            return new Response($this->getJson($entity->toArray()));
+        } else {
+            $errors = $form->getErrors();
+            return new Response($this->getJson($errors));
+        }
+    }
+
+    public function deleteAction(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $currentEntityName = $this->getCurrentEntityName();
+        if (!$currentEntityName) {
+            return new Response($this->getJson('Controller name is not valid.'));
+        }
+        $entity = $em->getRepository("AcmeStoreBundle:{$currentEntityName}")->findOneById($id);
+        if (!$entity) {
+            return new Response($this->getJson('Unable to find Category entity.'));
+        }
+        $oldEntity = clone($entity);        
+        $em->remove($entity);
+        $em->flush();
+        return new Response($this->getJson($oldEntity->toArray()));
+    }
+
     protected function getJson($data) {
         $encoders    = array(new XmlEncoder(), new JsonEncoder());
         $normalizers = array(new ObjectNormalizer());
@@ -79,5 +148,4 @@ class MainApiController extends Controller
         $jsonContent = $serializer->serialize($data,'json');
         return $jsonContent;
     }
-
 }

@@ -1,8 +1,8 @@
 <div style="border: 1px solid blue; text-align: center;">
   <div class="nav nav-pills">
-    <button class="btn" ng-click="typeChange('product')">Product</button>
-    <button class="btn" ng-click="typeChange('category')">Categories</button>
-    <button class="btn" ng-click="typeChange('contact')">Contacts</button>
+    <button class="btn btn-default" ng-click="typeChange('product')">Product</button>
+    <button class="btn btn-default" ng-click="typeChange('category')">Categories</button>
+    <button class="btn btn-default" ng-click="typeChange('contact')">Contacts</button>
   </div>
 </div>
 
@@ -17,4 +17,6 @@
 <div ng-show="type==='category'">
   <div ng-include="'/category/index.html'"></div>
 </div>
-<div ng-show="type==='contact'">Contacts</div>
+<div ng-show="type==='contact'">
+	<div ng-include="'/contact/index.html'"></div>
+</div>
