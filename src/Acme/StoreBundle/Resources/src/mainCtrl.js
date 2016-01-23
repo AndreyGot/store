@@ -39,6 +39,20 @@ mainCtrl = function ($scope,Restangular)
 		}
 	});
 
+	$scope.currentCategory = null;
+	$scope.editAndShowCategory = function (category) {
+		$scope.currentCategory = category;
+	};
+
+	$scope.back = function () {
+		$scope.currentCategory = null;
+	}
+
+	$scope.showCategory = function (category) {
+		category.show = true;
+		$scope.category = category;
+	};
+
 	$scope.editCategory = function (category) {
 		category.edit = true;
 	};
@@ -71,7 +85,24 @@ mainCtrl = function ($scope,Restangular)
 		category.save().then(function (data) {
 			category.edit = false;
 			category.id   = data.id;
+			$scope.back();
 		});
-	};	
+	};
+
+	//path of Products	
+		$scope.editProduct = function (product) {
+		product.edit = true;
+	};
+
+	$scope.saveProduct = function (product) {
+		Restangular.restangularizeElement(null, product, 'product');
+		if (product.id) {
+			product.fromServer = true;
+		}
+		product.save().then(function (data) {
+			product.edit = false;
+			product.id   = data.id;
+		});
+	};
 };
 angular.module('andrey').controller('mainCtrl',mainCtrl);

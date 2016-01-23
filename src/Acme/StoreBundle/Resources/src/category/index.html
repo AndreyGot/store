@@ -1,22 +1,60 @@
-<table class="table-condensed" >
-  <tr ng-repeat="category in categories" style="border: 1px solid green;" ng-click="editCategory(category)">
-    <td>[[category.id]]</td>
-  	<td>
-	  	<div ng-show="!category.edit">
-  			[[category.name]]
-    		<img ng-src="/image/edit_25x25.png" alt="Description" />
-      </div>
-      <div ng-show="category.edit">
-        <input name="categoryName" ng-model="category.name">
-        <button ng-click="saveCategory(category)">
-          Save
-        </button>
-        <button ng-click="deleteCategory(category)">
-          Delete
-        </button>
-      </div>
-    </td>
-  </tr>
-</table>
+ <div ng-show="!currentCategory">
+  <div class="row">
+    <div class="col-xs-offset-1 col-xs-6">
+      <table class="table table-striped" >
+        <tr 
+          ng-repeat="category in categories" 
+          style="border: 1px solid green;" 
+          ng-click="editAndShowCategory(category)">
+          <!-- ng-click="editCategory(category)" -->
+          <td>[[category.id]]</td>
+          <td>
+            <div ng-show="!category.edit">
+              [[category.name]]
+              <img ng-src="/image/edit_25x25.png" alt="Description" />
+            </div>
+            <div ng-show="category.edit">
+              <input name="categoryName" ng-model="category.name">
+              <button ng-click="saveCategory(category)">
+                Save
+              </button>
+              <button ng-click="deleteCategory(category)">
+                Delete
+              </button>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+  </div>
+  <button class="btn btn-info" ng-click="addCategory()">
+    Add new Category
+  </button>
+ </div>
 
-<button class="btn btn-info" ng-click="addCategory()">Add new Category</button>
+ <div ng-show="currentCategory">
+   <div class="row">
+     <div class="col-xs-offset-1 col-xs-2">
+     [[currentCategory.id]]
+     </div>
+     <div class="col-xs-2">
+     <input
+      type="text"
+      ng-model="currentCategory.name"
+     />
+     </div>
+   </div>
+
+   <div class="row">
+     <div class="col-xs-offset-1 col-xs-2">
+       <button class="btn btn-default" ng-click="saveCategory(currentCategory)">
+         SAVE
+       </button>
+     </div>
+     <div class="col-xs-2">
+      <button class="btn btn-default" ng-click="back()">
+        BACK
+      </button>
+     </div>
+   </div>
+ </div>

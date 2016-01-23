@@ -1,16 +1,22 @@
-<table class="table-condensed" >
-  <tr>
-    <th>Id</th>
-    <th>Name</th>
-    <th>Price</th>
-    <th>Описание</th>
-    <th>Категория</th>
-  </tr>
-  <tr ng-repeat="product in products" style="border: 1px solid blue;">
-    <td>[[product.id]]</td>
-    <td>[[product.name]]</td>
-    <td>[[product.price]]</td>
-    <td>[[product.description]]</td>
-    <td>[[product.categoryName]]</td>
-  </tr>
-</table>
+<div class="row">
+  <div class="col-xs-offset-1 col-xs-10">
+    <table class="table table-striped" >
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Описание</th>
+        <th>Категория</th>
+      </tr>
+      <tr ng-repeat="product in products" style="border: 1px solid blue;">
+        <td>[[product.id]]</td>
+        <td>[[product.name]]</td>
+        <td>[[product.price]]</td>
+        <td>[[product.description]]</td>
+        <td>[[product.categoryName]]</td>
+      </tr>
+    </table>
+  </div>
+</div>
+
+
