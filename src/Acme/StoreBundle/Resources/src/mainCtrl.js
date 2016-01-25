@@ -75,6 +75,7 @@ mainCtrl = function ($scope,Restangular)
 				}
 			}
 		});
+		$scope.back();
 	};
 
 	$scope.saveCategory = function (category) {
