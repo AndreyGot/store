@@ -14,9 +14,6 @@ class ProductType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        // var_dump(get_class_methods($builder));
-        var_dump(get_class_methods($options));
-
         $builder
             ->add('name')
             ->add('price')
@@ -31,7 +28,8 @@ class ProductType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Acme\StoreBundle\Entity\Product'
+            'data_class' => 'Acme\StoreBundle\Entity\Product',
+            'csrf_protection' => false,
         ));
     }
 

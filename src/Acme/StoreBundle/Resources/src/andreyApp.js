@@ -1,4 +1,4 @@
-angular.module('andrey',['ui.router','ui.bootstrap','restangular'])
+angular.module('andrey',['ui.router','ui.bootstrap','restangular','ngSanitize','ui.select'])
   .config(['$interpolateProvider', function ($interpolateProvider) {
     $interpolateProvider.startSymbol('[[');
     $interpolateProvider.endSymbol(']]');

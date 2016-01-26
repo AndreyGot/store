@@ -5,25 +5,9 @@
   </head>
 
   <link rel="stylesheet" href="{{ asset('components/bootstrap/dist/css/bootstrap.css') }}">
+  <link rel="stylesheet" href="{{ asset('components/angular-ui-select/dist/select.min.css') }}">
   <body ng-app="preloader">
     <div ui-view></div>
-    {# <div ng-controller="mainCtrl"> #}
-{#       <div style="border: 1px solid blue; text-align: center;">
-        <div class="nav nav-pills">
-          <button class="btn" ui-sref="product">Product</button>
-          <button class="btn" ui-sref="category">Categories</button>
-          <button class="btn">Contakts</button>
-          <button class="btn" ng-click="typeChange('product')">Product</button>
-          <button class="btn" ng-click="typeChange('category')">Categories</button>
-          <button class="btn" ng-click="typeChange('contact')">Contacts</button>
-        </div>
-      </div>
-      <div ng-show="type==='product'">Product</div>
-      <div ng-show="type==='category'">Categories</div>
-      <div ng-show="type==='contact'">Contacts</div> #}
-
-
-    {# </div> #}
     <script src="{{ asset('libs/libs.js') }}" type="text/javascript"></script>
     <script src="{{ asset('js/app.js') }}" type="text/javascript"></script>
   </body>

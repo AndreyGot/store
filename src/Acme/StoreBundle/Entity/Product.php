@@ -45,11 +45,12 @@ class Product
 
     public function toArray()
     {
-        return array('id'   => $this->getId(), 
-                     'name' => $this->getName(),
-                     'price'=> $this->getPrice(),
-                     'description'=> $this->getDescription(),
-                     'categoryName'=>$this->getCategory()->getName(),
+        return array('id'           => $this->getId(), 
+                     'name'         => $this->getName(),
+                     'price'        => $this->getPrice(),
+                     'description'  => $this->getDescription(),
+                     'categoryName' => $this->getCategory()->getName(),
+                     'category_id'  => $this->getCategoryId(),
                      );
 
     }

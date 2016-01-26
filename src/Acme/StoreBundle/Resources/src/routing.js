@@ -10,14 +10,19 @@ angular.module('andrey').config(function($stateProvider, $urlRouterProvider) {
       templateUrl: '/main.html',
       controller: mainCtrl
     })
-    .state('category', {
+    .state('main.category', {
       url: '/category',
       templateUrl: '/category/index.html',
       controller: categoriesCtrl
     })
-    .state('product', {
+    .state('main.product', {
       url: '/product',
       templateUrl: '/product/index.html',
       controller: productsCtrl
+    })
+    .state('main.contact', {
+      url: '/contact',
+      templateUrl: '/contact/index.html',
+      controller: contactCtrl
     });
 });

@@ -69,6 +69,8 @@ gulp.task('libs', function () {
       'web/components/angular-ui-bootstrap-bower/ui-bootstrap-tpls.min.js',
       'web/components/underscore/underscore.js',
       'web/components/restangular/dist/restangular.js',
+      'web/components/angular-ui-select/dist/select.min.js',
+      'web/components/angular-sanitize/angular-sanitize.min.js',
     ])
     .pipe(concat('libs.js'))
     .pipe(gulp.dest('web/libs'))

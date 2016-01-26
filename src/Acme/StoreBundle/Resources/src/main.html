@@ -1,22 +1,13 @@
 <div style="border: 1px solid blue; text-align: center;">
   <div class="nav nav-pills">
-    <button class="btn btn-default" ng-click="typeChange('product')">Product</button>
-    <button class="btn btn-default" ng-click="typeChange('category')">Categories</button>
-    <button class="btn btn-default" ng-click="typeChange('contact')">Contacts</button>
+    <button class="btn btn-default" ui-sref="main.product">Product</button>
+    <button class="btn btn-default" ui-sref="main.category">Categories</button>
+    <button class="btn btn-default" ui-sref="main.contact">Contacts</button>
   </div>
 </div>
 
-<div ng-show="!type">
-  Шаблон по умолчанию
-</div>
-
-<div ng-show="type==='product'">
-  <div ng-include="'/product/index.html'"></div>
-</div>
-
-<div ng-show="type==='category'">
-  <div ng-include="'/category/index.html'"></div>
-</div>
-<div ng-show="type==='contact'">
-	<div ng-include="'/contact/index.html'"></div>
+<div ui-view>
+	<div>
+	  Шаблон по умолчанию
+	</div>
 </div>
