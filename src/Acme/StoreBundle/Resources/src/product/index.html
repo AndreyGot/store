@@ -57,6 +57,8 @@
     <div class="row">
       <div class="col-xs-offset-1">
         <p class="col-xs-2">Описание товара</p>
+      </div>
+      <div class="col-xs-2">
         <input type="text" ng-model="currentProduct.description"/>
       </div>
     </div>
@@ -64,7 +66,9 @@
     <div class="row">
       <div class="col-xs-offset-1">
         <p class="col-xs-2">Категория товара</p>
-        <!-- <input type="text" ng-model="currentProduct.categoryName"/> -->
+      </div>
+          <!-- class="form-control" -->
+      <div class="col-xs-2">
         <ui-select 
           ng-model="currentProduct.category_id">
             <ui-select-match>

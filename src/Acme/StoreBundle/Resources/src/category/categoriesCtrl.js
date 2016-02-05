@@ -1,16 +1,18 @@
 categoriesCtrl = function ($scope,$http,Restangular)
 {
+	
 	$scope.categories = [];
 	function uploadCaregories () {
 		var service = Restangular.service('category');
 		service.getList().then(function (response) {
 			$scope.categories = response;
-		});
+  	});
 	}
 	uploadCaregories();
 
 	$scope.currentCategory = null;
 	$scope.editAndShowCategory = function (category) {
+		category.previousCategory = angular.copy(category);
 		$scope.currentCategory = category;
 	};
 
@@ -18,20 +20,10 @@ categoriesCtrl = function ($scope,$http,Restangular)
 		$scope.currentCategory = null;
 	};
 
-	$scope.showCategory = function (category) {
-		category.show = true;
-		$scope.category = category;
-	};
-
-	$scope.editCategory = function (category) {
-		category.edit = true;
-	};
-
 	$scope.addCategory = function () {
 		var category = {
 			id: null,
 			name: '',
-			edit: true
 		};
 		$scope.currentCategory = category;
 		$scope.categories.push(category);
@@ -39,9 +31,9 @@ categoriesCtrl = function ($scope,$http,Restangular)
 
 	$scope.deleteCategory = function (category) {
 		Restangular.restangularizeElement(null, category, 'category');
-		category.remove().then(function(data){
+		category.remove().then(function(){
 			for (var i = $scope.categories.length - 1; i >= 0; i--) {
-				if ($scope.categories[i].id === data.id) {
+				if ($scope.categories[i].id === category.id) {
 					$scope.categories.splice(i, 1);
 				}
 			}
@@ -50,13 +42,19 @@ categoriesCtrl = function ($scope,$http,Restangular)
 	};
 
 	$scope.saveCategory = function (category) {
-		Restangular.restangularizeElement(null, category, 'category');
-		if (category.id) {
-			category.fromServer = true;
+		var previousCategory = category.previousCategory;	
+		
+		Restangular.restangularizeElement(null, previousCategory, 'category');
+		if (previousCategory.id) {
+			previousCategory.fromServer = true;
 		}
-		category.save().then(function (data) {
-			category.edit = false;
-			category.id   = data.id;
+		previousCategory.save().then(function (data) {
+			previousCategory.id   = data.id;
+			for(var name in previousCategory) {
+			  if (previousCategory.hasOwnProperty(name)) {
+			  	category[name] = previousCategory[name];
+			  }
+			}
 			$scope.back();
 		});
 	};

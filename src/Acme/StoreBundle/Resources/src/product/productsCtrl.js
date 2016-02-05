@@ -47,9 +47,9 @@ productsCtrl = function ($scope,$http,Restangular)
 
 	$scope.deleteProduct = function (product) {
 		Restangular.restangularizeElement(null, product, 'product');
-		product.remove().then(function(data){
+		product.remove().then(function(){
 			for (var i = $scope.products.length - 1; i >= 0; i--) {
-				if ($scope.products[i].id === data.id) {
+				if ($scope.products[i].id === product.id) {
 					$scope.products.splice(i, 1);
 				}
 			}
@@ -63,10 +63,13 @@ productsCtrl = function ($scope,$http,Restangular)
 			product.fromServer = true;
 		}
 		product.save().then(function (data) {
+			console.log(data);
 			product.edit         = false;
 			product.id           = data.id;
 			product.categoryName = data.categoryName;
 			$scope.back();
+		}, function (data) {
+			console.log(data);
 		});
 	};
 };

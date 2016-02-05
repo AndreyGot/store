@@ -6,6 +6,9 @@ angular.module('andrey',['ui.router','ui.bootstrap','restangular','ngSanitize','
   .config(function (RestangularProvider) {
   	var pathname = document.location.pathname.replace(/\/$/,'');
   	RestangularProvider.setBaseUrl(pathname);
+    RestangularProvider.setResponseExtractor(function extractResponse(serverResponse) {
+      return serverResponse.data;
+    });
   })
   .run(function () {});
   

@@ -3,6 +3,7 @@
 namespace Acme\StoreBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Table(name="product")
@@ -24,6 +25,7 @@ class Product
 
     /**
      * @ORM\Column(type="decimal", scale=2)
+     * @ Assert\Type(type="decimal", message="The price is not a valid.")
      */
     protected $price;
 
