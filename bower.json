@@ -24,6 +24,7 @@
     "angular-sanitize": "1.4.9",
     "angular-ui-select": "0.14.0",
     "selectize": "0.12.1",
-    "select2":"3.4.5"
+    "select2":"3.4.5",
+    "bootstrap":"3.3.6"
   }
 }
