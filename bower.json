@@ -13,7 +13,7 @@
   "dependencies": {
     "jquery": "2.2.0",
     "modernizr": "~2.8.1",
-    "angular": "~1.x",
+    "angular": "~1.2.*",
     "angular-route": "~1.2.16",
     "angular-animate": "~1.2.16",
     "angular-ui-router": "~0.2.15",
@@ -22,9 +22,12 @@
     "angular-bootstrap": "1.1.1",
     "underscore": "1.8.3",
     "angular-sanitize": "1.4.9",
-    "angular-ui-select": "0.14.0",
+    "angular-ui-select": "0.14.2",
     "selectize": "0.12.1",
     "select2":"3.4.5",
     "bootstrap":"3.3.6"
+  },
+  "resolutions": {
+    "angular": "~1.2.*"
   }
 }

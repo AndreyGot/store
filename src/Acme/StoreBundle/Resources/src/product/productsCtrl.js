@@ -63,7 +63,6 @@ productsCtrl = function ($scope,$http,Restangular)
 			product.fromServer = true;
 		}
 		product.save().then(function (data) {
-			console.log(data);
 			product.edit         = false;
 			product.id           = data.id;
 			product.categoryName = data.categoryName;
